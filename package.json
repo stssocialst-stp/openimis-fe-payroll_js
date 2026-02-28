@@ -1,9 +1,15 @@
 {
-  "name": "@openimis/fe-payroll",
+  "name": "@stssocialst-stp/fe-payroll",
   "version": "0.1.0",
   "license": "AGPL-3.0-only",
   "description": "openIMIS Frontend Payroll module",
-  "repository": "openimis/openimis-fe-payroll_js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/stssocialst-stp/openimis-fe-payroll_js"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
+  },
   "main": "dist/index.js",
   "module": "dist/index.es.js",
   "engines": {
