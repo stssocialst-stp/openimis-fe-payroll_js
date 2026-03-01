@@ -14,7 +14,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import {
   Searcher, useModulesManager, useTranslations,
-} from '@openimis/fe-core';
+} from '@stssocialst-stp/fe-core';
 import PhotoCameraOutlinedIcon from '@material-ui/icons/PhotoCameraOutlined';
 import { fetchBenefitAttachments, deleteBenefitConsumption } from '../../actions';
 import {

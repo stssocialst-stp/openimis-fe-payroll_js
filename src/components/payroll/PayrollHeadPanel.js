@@ -12,7 +12,7 @@ import {
   TextInput,
   withModulesManager,
   FormattedMessage,
-} from '@openimis/fe-core';
+} from '@stssocialst-stp/fe-core';
 import AdvancedFiltersDialog from './AdvancedFiltersDialog';
 import { CLEARED_STATE_FILTER } from '../../constants';
 import PayrollStatusPicker from './PayrollStatusPicker';

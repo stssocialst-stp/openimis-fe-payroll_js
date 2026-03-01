@@ -1,6 +1,6 @@
 import React from 'react';
 import { Tab } from '@material-ui/core';
-import { PublishedComponent, useTranslations } from '@openimis/fe-core';
+import { PublishedComponent, useTranslations } from '@stssocialst-stp/fe-core';
 import {
   BENEFIT_CONSUMPTION_LIST_TAB_VALUE,
   MODULE_NAME,

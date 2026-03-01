@@ -11,7 +11,7 @@ import {
   useTranslations,
   useHistory,
   withTooltip,
-} from '@openimis/fe-core';
+} from '@stssocialst-stp/fe-core';
 import {
   MODULE_NAME,
   PAYROLL_PAYMENT_POINT_ROUTE,

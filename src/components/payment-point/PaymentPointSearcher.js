@@ -14,7 +14,7 @@ import {
   coreConfirm,
   clearConfirm,
   journalize,
-} from '@openimis/fe-core';
+} from '@stssocialst-stp/fe-core';
 import { deletePaymentPoint, fetchPaymentPoints } from '../../actions';
 import {
   DEFAULT_PAGE_SIZE, MODULE_NAME, PAYROLL_PAYMENT_POINT_ROUTE, RIGHT_PAYMENT_POINT_SEARCH, ROWS_PER_PAGE_OPTIONS,

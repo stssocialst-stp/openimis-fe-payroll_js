@@ -7,7 +7,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import {
   useTranslations,
   useModulesManager,
-} from '@openimis/fe-core';
+} from '@stssocialst-stp/fe-core';
 import PayrollPaymentFilesSearcher from '../PayrollPaymentFilesSearcher';
 import { MODULE_NAME } from '../../../constants';
 

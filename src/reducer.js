@@ -9,7 +9,7 @@ import {
   pageInfo,
   parseData,
   decodeId,
-} from '@openimis/fe-core';
+} from '@stssocialst-stp/fe-core';
 import {
   CLEAR, ERROR, REQUEST, SUCCESS,
 } from './utils/action-type';

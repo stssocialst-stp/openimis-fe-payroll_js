@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 import {
   Searcher, useModulesManager, useTranslations,
-} from '@openimis/fe-core';
+} from '@stssocialst-stp/fe-core';
 import { fetchBenefitConsumptions } from '../../actions';
 import { DEFAULT_PAGE_SIZE, ROWS_PER_PAGE_OPTIONS } from '../../constants';
 import BenefitConsumptionFilter from './BenefitConsumptionFilter';

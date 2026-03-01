@@ -1,4 +1,4 @@
-import { baseApiUrl } from '@openimis/fe-core';
+import { baseApiUrl } from '@stssocialst-stp/fe-core';
 
 export default function downloadPayroll(payrollId, payrollFileName, blank = true) {
   const url = new URL(

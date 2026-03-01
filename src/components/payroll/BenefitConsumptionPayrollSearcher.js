@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 import {
   Searcher, useModulesManager, useTranslations,
-} from '@openimis/fe-core';
+} from '@stssocialst-stp/fe-core';
 import {
   Paper,
   Grid,

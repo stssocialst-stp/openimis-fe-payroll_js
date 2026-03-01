@@ -9,7 +9,7 @@ import {
   FormPanel,
   withModulesManager,
   PublishedComponent,
-} from '@openimis/fe-core';
+} from '@stssocialst-stp/fe-core';
 import { MAX_LENGTH } from '../../constants';
 
 const styles = (theme) => ({

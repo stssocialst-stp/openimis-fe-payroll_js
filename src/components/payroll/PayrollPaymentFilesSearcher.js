@@ -9,7 +9,7 @@ import {
   Searcher,
   useModulesManager,
   useTranslations,
-} from '@openimis/fe-core';
+} from '@stssocialst-stp/fe-core';
 import {
   DEFAULT_PAGE_SIZE, MODULE_NAME,
   ROWS_PER_PAGE_OPTIONS, PAYROLL_PAYMENT_FILE_STATUS,

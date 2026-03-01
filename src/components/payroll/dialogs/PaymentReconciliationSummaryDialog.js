@@ -9,7 +9,7 @@ import {
   useModulesManager,
   useTranslations,
   useHistory,
-} from '@openimis/fe-core';
+} from '@stssocialst-stp/fe-core';
 import {
   Paper,
   Grid,

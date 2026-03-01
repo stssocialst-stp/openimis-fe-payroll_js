@@ -11,7 +11,7 @@ import {
   useTranslations,
   PublishedComponent,
   decodeId,
-} from '@openimis/fe-core';
+} from '@stssocialst-stp/fe-core';
 import {
   CONTAINS_LOOKUP,
   DEFAULT_DEBOUNCE_TIME,

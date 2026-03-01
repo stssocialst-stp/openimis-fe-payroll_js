@@ -8,7 +8,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import {
   useModulesManager,
   useTranslations,
-} from '@openimis/fe-core';
+} from '@stssocialst-stp/fe-core';
 import {
   Paper,
   Grid,

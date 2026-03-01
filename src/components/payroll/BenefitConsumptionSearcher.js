@@ -12,7 +12,7 @@ import {
 
 import {
   Searcher, useModulesManager, useTranslations,
-} from '@openimis/fe-core';
+} from '@stssocialst-stp/fe-core';
 import PhotoCameraOutlinedIcon from '@material-ui/icons/PhotoCameraOutlined';
 import { fetchBenefitConsumptions } from '../../actions';
 import { BENEFIT_CONSUMPTION_STATUS, DEFAULT_PAGE_SIZE, ROWS_PER_PAGE_OPTIONS } from '../../constants';

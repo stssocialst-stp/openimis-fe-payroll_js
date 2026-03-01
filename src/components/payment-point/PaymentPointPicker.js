@@ -5,7 +5,7 @@ import { TextField } from '@material-ui/core';
 
 import {
   useGraphqlQuery, useTranslations, Autocomplete, useModulesManager,
-} from '@openimis/fe-core';
+} from '@stssocialst-stp/fe-core';
 import { PAYMENT_POINT_PROJECTION } from '../../actions';
 
 function PaymentPointPicker({

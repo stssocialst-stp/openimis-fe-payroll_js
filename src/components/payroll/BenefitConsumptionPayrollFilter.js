@@ -10,7 +10,7 @@ import {
   useTranslations,
   TextInput,
   NumberInput,
-} from '@openimis/fe-core';
+} from '@stssocialst-stp/fe-core';
 import { CONTAINS_LOOKUP, DEFAULT_DEBOUNCE_TIME, EMPTY_STRING } from '../../constants';
 import BenefitConsumptionStatusPicker from '../../pickers/BenefitConsumptionStatusPicker';
 

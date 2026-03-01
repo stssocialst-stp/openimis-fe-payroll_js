@@ -6,7 +6,7 @@ import React from 'react';
 import { PinDrop } from '@material-ui/icons';
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
 
-import { FormattedMessage } from '@openimis/fe-core';
+import { FormattedMessage } from '@stssocialst-stp/fe-core';
 import { RIGHT_PAYMENT_POINT_SEARCH, RIGHT_PAYROLL_CREATE, RIGHT_PAYROLL_SEARCH } from './constants';
 import reducer from './reducer';
 import messages_en from './translations/en.json';

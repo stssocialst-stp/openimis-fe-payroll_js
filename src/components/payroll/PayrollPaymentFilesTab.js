@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Tab } from '@material-ui/core';
-import { PublishedComponent, useTranslations } from '@openimis/fe-core';
+import { PublishedComponent, useTranslations } from '@stssocialst-stp/fe-core';
 import {
   MODULE_NAME, PAYROLL_PAYMENT_FILES_TAB_VALUE,
 } from '../../constants';

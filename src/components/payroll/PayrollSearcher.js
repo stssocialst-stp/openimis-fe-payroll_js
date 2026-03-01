@@ -14,7 +14,7 @@ import {
   coreConfirm,
   clearConfirm,
   journalize,
-} from '@openimis/fe-core';
+} from '@stssocialst-stp/fe-core';
 import PayrollFilter from './PayrollFilter';
 import {
   DEFAULT_PAGE_SIZE, MODULE_NAME, PAYROLL_PAYROLL_ROUTE,

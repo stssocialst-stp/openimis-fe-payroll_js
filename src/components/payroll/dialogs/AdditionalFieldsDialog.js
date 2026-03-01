@@ -10,7 +10,7 @@ import {
   formatMessage,
   renderInputComponent,
   createFieldsBasedOnJSON,
-} from '@openimis/fe-core';
+} from '@stssocialst-stp/fe-core';
 import { withTheme, withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';

@@ -7,7 +7,7 @@ import {
   Helmet,
   useModulesManager,
   useTranslations,
-} from '@openimis/fe-core';
+} from '@stssocialst-stp/fe-core';
 import {
   MODULE_NAME,
   RIGHT_PAYROLL_SEARCH,

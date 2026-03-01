@@ -6,7 +6,7 @@ import {
   formatPageQueryWithCount,
   formatQuery,
   graphql,
-} from '@openimis/fe-core';
+} from '@stssocialst-stp/fe-core';
 
 import { ACTION_TYPE, MUTATION_SERVICE } from './reducer';
 import {

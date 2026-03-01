@@ -2,7 +2,7 @@ import React from 'react';
 import {
   Modal, Backdrop, Fade, Box, Typography, Button,
 } from '@material-ui/core';
-import { useTranslations, useModulesManager } from '@openimis/fe-core';
+import { useTranslations, useModulesManager } from '@stssocialst-stp/fe-core';
 
 function ErrorSummaryModal({ open, onClose, benefitAttachment }) {
   const modulesManager = useModulesManager();
