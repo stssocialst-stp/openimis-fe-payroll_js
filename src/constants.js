@@ -107,3 +107,17 @@ export const PAYROLL_PAYMENT_FILE_STATUS_LIST = [
 export const BENEFIT_PLAN_CONTENT_TYPE_ID = 175;
 
 export const PAYROLL_FROM_FAILED_INVOICES_URL_PARAM = 'createPayrollFromFailedInvoices=true';
+
+export const PAYMENT_METHOD = {
+  STRATEGY_OFFLINE_PAYMENT: 'StrategyOfflinePayment',
+  STRATEGY_ONLINE_PAYMENT: 'StrategyOnlinePayment',
+  STRATEGY_BISTP_PAYMENT: 'StrategyBistpPayment',
+};
+
+export const BISTP_SUMMARY_STATUS = {
+  RECONCILED: 'reconciled',
+  REJECTED: 'rejected',
+  PENDING: 'pending',
+  SKIPPED_NIB: 'skippedNib',
+  SEND_FAILED: 'sendFailed',
+};

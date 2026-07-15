@@ -152,5 +152,20 @@
     "payroll.additonalFields.label": "Additional Fields",
     "payroll.additonalFields.showAdditionalFields": "Show Additional Fields",
     "payroll.additonalFields.close": "Close",
-    "payroll.summaryUpload": "Summary Upload"
+    "payroll.summaryUpload": "Summary Upload",
+
+    "payroll.benefitConsumption.nib": "NIB",
+    "payroll.bistp.viewSummary": "BISTP Payment Summary",
+    "payroll.bistp.submitPayment": "Submit BISTP Payment",
+    "payroll.bistp.reconciled": "Reconciled",
+    "payroll.bistp.pending": "Pending (Bank)",
+    "payroll.bistp.rejected": "Rejected",
+    "payroll.bistp.skippedNib": "Skipped (No NIB)",
+    "payroll.bistp.sendFailed": "Send Failed",
+    "payroll.bistp.status.reconciled": "Paid",
+    "payroll.bistp.status.rejected": "Rejected",
+    "payroll.bistp.status.pending": "Sent to Bank",
+    "payroll.bistp.status.skippedNib": "No NIB",
+    "payroll.bistp.status.sendFailed": "Send Failed",
+    "payroll.bistp.progress": "BISTP Progress"
 }

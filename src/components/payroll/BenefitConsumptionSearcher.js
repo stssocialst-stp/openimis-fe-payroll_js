@@ -13,9 +13,10 @@ import {
 import {
   Searcher, useModulesManager, useTranslations,
 } from '@stssocialst-stp/fe-core';
+import Chip from '@material-ui/core/Chip';
 import PhotoCameraOutlinedIcon from '@material-ui/icons/PhotoCameraOutlined';
 import { fetchBenefitConsumptions } from '../../actions';
-import { BENEFIT_CONSUMPTION_STATUS, DEFAULT_PAGE_SIZE, ROWS_PER_PAGE_OPTIONS } from '../../constants';
+import { BENEFIT_CONSUMPTION_STATUS, DEFAULT_PAGE_SIZE, ROWS_PER_PAGE_OPTIONS, PAYMENT_METHOD } from '../../constants';
 import BenefitConsumptionFilter from './BenefitConsumptionFilter';
 import AdditionalFieldsDialog from './dialogs/AdditionalFieldsDialog';
 import PayrollPrintTemplate from '../PayrollPrintTemplate';
@@ -41,20 +42,24 @@ function BenefitConsumptionSearcher({
 
   const fetch = (params) => fetchBenefitConsumptions(modulesManager, params);
 
-  const headers = () => [
-    'benefitConsumption.individual.firstName',
-    'benefitConsumption.individual.lastName',
-    'benefitConsumption.photo',
-    'benefitConsumption.code',
-    'benefitConsumption.dateDue',
-    'benefitConsumption.receipt',
-    'benefitConsumption.amount',
-    'benefitConsumption.type',
-    'benefitConsumption.status',
-    'benefitConsumption.payedOnTime',
-    'benefitConsumption.paymentDate',
-    '',
-  ];
+  const headers = () => {
+    const cols = [
+      'benefitConsumption.individual.firstName',
+      'benefitConsumption.individual.lastName',
+      'benefitConsumption.nib',
+      'benefitConsumption.photo',
+      'benefitConsumption.code',
+      'benefitConsumption.dateDue',
+      'benefitConsumption.receipt',
+      'benefitConsumption.amount',
+      'benefitConsumption.type',
+      'benefitConsumption.status',
+      'benefitConsumption.payedOnTime',
+      'benefitConsumption.paymentDate',
+      '',
+    ];
+    return cols;
+  };
 
   const checkBenefitDueDate = (benefitConsumption) => {
     if (!benefitConsumption.receipt) {
@@ -68,9 +73,33 @@ function BenefitConsumptionSearcher({
       ? 'True' : 'False';
   };
 
+  const getBistpStatusBadge = (benefitConsumption) => {
+    if (!benefitConsumption) return null;
+    const jsonExt = benefitConsumption.jsonExt || {};
+    const { status } = benefitConsumption;
+
+    if (status === BENEFIT_CONSUMPTION_STATUS.RECONCILED) {
+      return <Chip label={formatMessage('payroll.bistp.status.reconciled')} style={{ backgroundColor: '#4caf50', color: 'white' }} size="small" />;
+    }
+    if (status === BENEFIT_CONSUMPTION_STATUS.REJECTED) {
+      return <Chip label={`${formatMessage('payroll.bistp.status.rejected')}${jsonExt.bistp_rejection_reason ? `: ${jsonExt.bistp_rejection_reason}` : ''}`} style={{ backgroundColor: '#f44336', color: 'white' }} size="small" />;
+    }
+    if (status === BENEFIT_CONSUMPTION_STATUS.APPROVE_FOR_PAYMENT) {
+      return <Chip label={formatMessage('payroll.bistp.status.pending')} style={{ backgroundColor: '#ff9800', color: 'white' }} size="small" />;
+    }
+    if (jsonExt.bistp_skip_reason === 'nib_ausente') {
+      return <Chip label={formatMessage('payroll.bistp.status.skippedNib')} style={{ backgroundColor: '#9e9e9e', color: 'white' }} size="small" />;
+    }
+    if (jsonExt.bistp_skip_reason === 'envio_falhou') {
+      return <Chip label={formatMessage('payroll.bistp.status.sendFailed')} style={{ backgroundColor: '#f44336', color: 'white' }} size="small" />;
+    }
+    return null;
+  };
+
   const itemFormatters = () => [
     (benefitConsumption) => benefitConsumption?.individual?.firstName,
     (benefitConsumption) => benefitConsumption?.individual?.lastName,
+    (benefitConsumption) => benefitConsumption?.individual?.nib || '',
     (benefitConsumption) => (
       benefitConsumption.receipt ? (
         <PhotoCameraOutlinedIcon style={{ fontSize: 150 }} />
@@ -89,13 +118,20 @@ function BenefitConsumptionSearcher({
         ? ''
         : benefitConsumption?.benefitAttachment[0]?.bill?.datePayed
     ),
-    (benefitConsumption) => (
-      <AdditionalFieldsDialog
-        jsonExt={benefitConsumption?.jsonExt}
-        buttonLabel="payroll.additonalFields.showAdditionalFields"
-        title="payroll.additonalFields.label"
-      />
-    ),
+    (benefitConsumption) => {
+      const jsonExt = benefitConsumption?.jsonExt || {};
+      const hasBistpFields = jsonExt.bistp_skip_reason || jsonExt.bistp_processed || jsonExt.bistp_rejection_reason;
+      return (
+        <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+          {hasBistpFields && getBistpStatusBadge(benefitConsumption)}
+          <AdditionalFieldsDialog
+            jsonExt={benefitConsumption?.jsonExt}
+            buttonLabel="payroll.additonalFields.showAdditionalFields"
+            title="payroll.additonalFields.label"
+          />
+        </div>
+      );
+    },
   ];
 
   const rowIdentifier = (benefitConsumption) => benefitConsumption.id;
@@ -103,6 +139,7 @@ function BenefitConsumptionSearcher({
   const sorts = () => [
     ['individual_FirstName', true],
     ['individual_LastName', true],
+    ['individual_Nib', true],
     ['photo', true],
     ['code', true],
     ['dateDue', true],

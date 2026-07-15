@@ -18,7 +18,7 @@ import {
 import PhotoCameraOutlinedIcon from '@material-ui/icons/PhotoCameraOutlined';
 import { fetchBenefitAttachments, deleteBenefitConsumption } from '../../actions';
 import {
-  DEFAULT_PAGE_SIZE, ROWS_PER_PAGE_OPTIONS, PAYROLL_STATUS,
+  DEFAULT_PAGE_SIZE, ROWS_PER_PAGE_OPTIONS, PAYROLL_STATUS, PAYMENT_METHOD,
 } from '../../constants';
 import BenefitConsumptionFilterModal from './BenefitConsumptionFilterModal';
 import ErrorSummaryModal from './dialogs/ErrorSummaryModal';
@@ -65,7 +65,8 @@ function BenefitConsumptionSearcherModal({
         filter: `payrollUuid: "${payrollUuid}"`,
       },
     };
-    if (reconciledMode && payrollDetail.paymentMethod !== 'StrategyOnlinePayment') {
+    if (reconciledMode && payrollDetail.paymentMethod !== PAYMENT_METHOD.STRATEGY_ONLINE_PAYMENT
+      && payrollDetail.paymentMethod !== PAYMENT_METHOD.STRATEGY_BISTP_PAYMENT) {
       filters.benefit_Status = {
         value: 'RECONCILED',
         filter: `benefit_Status: ${PAYROLL_STATUS.RECONCILED}`,
@@ -80,7 +81,8 @@ function BenefitConsumptionSearcherModal({
       `first: ${DEFAULT_PAGE_SIZE}`,
       `payrollUuid: "${payrollUuid}"`,
     ];
-    if (reconciledMode && payrollDetail.paymentMethod !== 'StrategyOnlinePayment') {
+    if (reconciledMode && payrollDetail.paymentMethod !== PAYMENT_METHOD.STRATEGY_ONLINE_PAYMENT
+      && payrollDetail.paymentMethod !== PAYMENT_METHOD.STRATEGY_BISTP_PAYMENT) {
       filters.push(`benefit_Status: ${PAYROLL_STATUS.RECONCILED}`);
     }
     return filters;
@@ -162,7 +164,8 @@ function BenefitConsumptionSearcherModal({
       </Button>
     ),
     (benefitAttachment) => (
-      payrollDetail.paymentMethod === 'StrategyOnlinePayment' && payrollDetail.status === PAYROLL_STATUS.RECONCILED
+      (payrollDetail.paymentMethod === PAYMENT_METHOD.STRATEGY_ONLINE_PAYMENT
+        || payrollDetail.paymentMethod === PAYMENT_METHOD.STRATEGY_BISTP_PAYMENT) && payrollDetail.status === PAYROLL_STATUS.RECONCILED
         && benefitAttachment.benefit.status !== 'RECONCILED' && (
           <Button
             onClick={() => setSelectedBenefitAttachment(benefitAttachment)}

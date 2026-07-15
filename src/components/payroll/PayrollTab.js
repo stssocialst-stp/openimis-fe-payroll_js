@@ -14,8 +14,10 @@ import {
   PAYROLL_TABS_PANEL_CONTRIBUTION_KEY,
   PAYROLL_STATUS,
   MODULE_NAME,
+  PAYMENT_METHOD,
 } from '../../constants';
 import PayrollPaymentDataUploadDialog from './dialogs/PayrollPaymentDataUploadDialog';
+import PaymentApproveForPaymentSummary from './dialogs/PaymentApproveForPaymentSummary';
 import downloadPayroll from '../../utils/export';
 
 const useStyles = makeStyles((theme) => ({
@@ -91,10 +93,17 @@ function PayrollTab({
               {formatMessage('payroll.summary.download')}
             </Button>
             )}
-            {payrollUuid && payroll?.status === PAYROLL_STATUS.APPROVE_FOR_PAYMENT && payroll.paymentMethod === 'StrategyOfflinePayment'
+            {payrollUuid && payroll?.status === PAYROLL_STATUS.APPROVE_FOR_PAYMENT && payroll.paymentMethod === PAYMENT_METHOD.STRATEGY_OFFLINE_PAYMENT
                 && (
                 <PayrollPaymentDataUploadDialog
                   payrollUuid={payrollUuid}
+                />
+                )}
+            {payrollUuid && payroll?.status === PAYROLL_STATUS.APPROVE_FOR_PAYMENT && payroll.paymentMethod === PAYMENT_METHOD.STRATEGY_BISTP_PAYMENT
+                && (
+                <PaymentApproveForPaymentSummary
+                  classes={{}}
+                  payrollDetail={payroll}
                 />
                 )}
           </div>

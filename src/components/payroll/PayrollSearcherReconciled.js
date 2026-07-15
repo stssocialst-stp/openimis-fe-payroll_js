@@ -11,9 +11,10 @@ import {
   clearConfirm,
   journalize,
 } from '@stssocialst-stp/fe-core';
+import LinearProgress from '@material-ui/core/LinearProgress';
 import PayrollFilter from './PayrollFilter';
 import {
-  DEFAULT_PAGE_SIZE, MODULE_NAME, PAYROLL_PAYROLL_ROUTE, RIGHT_PAYROLL_SEARCH, ROWS_PER_PAGE_OPTIONS, PAYROLL_STATUS,
+  DEFAULT_PAGE_SIZE, MODULE_NAME, PAYROLL_PAYROLL_ROUTE, RIGHT_PAYROLL_SEARCH, ROWS_PER_PAGE_OPTIONS, PAYROLL_STATUS, PAYMENT_METHOD,
 } from '../../constants';
 import { fetchPayrolls } from '../../actions';
 import PaymentReconciliationSummaryDialog from './dialogs/PaymentReconciliationSummaryDialog';
@@ -48,12 +49,33 @@ function PayrollSearcherReconciled({
     prevSubmittingMutationRef.current = submittingMutation;
   });
 
+  const renderBistpProgress = (payroll) => {
+    if (payroll.paymentMethod !== PAYMENT_METHOD.STRATEGY_BISTP_PAYMENT) return null;
+    const summary = payroll.bistpSummary || {};
+    const total = summary.total || 0;
+    const reconciled = summary.reconciled || 0;
+    const progress = total > 0 ? (reconciled / total) * 100 : 0;
+    return (
+      <div style={{ display: 'flex', alignItems: 'center', gap: 8, minWidth: 120 }}>
+        <LinearProgress
+          variant="determinate"
+          value={progress}
+          style={{ flex: 1, height: 8, borderRadius: 4 }}
+        />
+        <span style={{ fontSize: '0.75rem', whiteSpace: 'nowrap' }}>
+          {reconciled}/{total}
+        </span>
+      </div>
+    );
+  };
+
   const headers = () => [
     'payroll.name',
     'payroll.paymentPlan',
     'payroll.paymentPoint',
     'payroll.status',
     'payroll.paymentMethod',
+    'payroll.bistp.progress',
     'emptyLabel',
   ];
 
@@ -94,6 +116,7 @@ function PayrollSearcherReconciled({
       ? `${payroll.status}` : ''),
     (payroll) => (payroll.paymentMethod
       ? `${payroll.paymentMethod}` : ''),
+    (payroll) => renderBistpProgress(payroll),
     (payroll) => (
       <PayrollReconciliationFilesDialog
         classes={classes}
