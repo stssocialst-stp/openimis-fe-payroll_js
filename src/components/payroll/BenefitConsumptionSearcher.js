@@ -156,10 +156,10 @@ function BenefitConsumptionSearcher({
         filter:
         'isDeleted: false',
       },
-      payrollUuid: {
+      payrollbenefitconsumptionPayrollId: {
         value: payrollUuid,
         filter:
-        `payrollUuid: "${payrollUuid}"`,
+        `payrollbenefitconsumptionPayrollId: "${payrollUuid}"`,
       },
     };
     if (isPayrollFromFailedInvoices) {
