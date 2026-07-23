@@ -165,7 +165,7 @@ class PayrollHeadPanel extends FormPanel {
                 <Grid container className={classes.item}>
 
                   <AdvancedFiltersDialog
-                    object={payroll?.paymentPlan?.benefitPlanType ?? null}
+                    object={null}
                     objectToSave={payroll}
                     moduleName="social_protection"
                     objectType="BenefitPlan"
