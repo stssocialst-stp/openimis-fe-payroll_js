@@ -93,7 +93,7 @@ function PayrollSearcher({
 
   const sorts = () => [
     ['name', true],
-    ['benefitPlan', true],
+    ['benefitPlanNameCode', true],
     ['paymentPoint', true],
     ['status', true],
     ['paymentMethod', true],
@@ -138,8 +138,7 @@ function PayrollSearcher({
 
   const itemFormatters = () => [
     (payroll) => payroll.name,
-    (payroll) => (payroll.benefitPlan
-      ? `${payroll.benefitPlan.code} ${payroll.benefitPlan.name}` : ''),
+    (payroll) => payroll.benefitPlanNameCode ?? '',
     (payroll) => (payroll.paymentPoint
       ? `${payroll.paymentPoint.name}` : ''),
     (payroll) => (payroll.status
