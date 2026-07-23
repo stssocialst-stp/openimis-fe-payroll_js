@@ -19,12 +19,14 @@ import { bindActionCreators } from 'redux';
 import { MODULE_NAME, BENEFIT_CONSUMPTION_STATUS } from '../../../constants';
 import BenefitConsumptionSearcherModal from '../BenefitConsumptionSearcherModal';
 import downloadPayroll from '../../../utils/export';
-import { fetchPayroll } from '../../../actions';
+import { fetchPayroll, closePayroll } from '../../../actions';
+import { mutationLabel } from '../../../utils/string-utils';
 
 function PaymentPendingPayrollPaymentDialog({
   classes,
   payroll,
   fetchPayroll,
+  closePayroll,
   payrollDetail,
 }) {
   const modulesManager = useModulesManager();
@@ -79,6 +81,14 @@ function PaymentPendingPayrollPaymentDialog({
       setTotalReconciledBillAmount(reconciledAmount);
     }
   }, [isOpen, payroll]);
+
+  const closePayrollCallback = () => {
+    closePayroll(
+      payrollDetail,
+      formatMessageWithValues('payroll.mutation.closeLabel', mutationLabel(payrollDetail)),
+    );
+    handleClose();
+  };
 
   const downloadPayrollData = (payrollUuid, payrollName) => {
     downloadPayroll(payrollUuid, payrollName);
@@ -176,6 +186,17 @@ function PaymentPendingPayrollPaymentDialog({
               >
                 {formatMessage('payroll.summary.download')}
               </Button>
+              <Button
+                onClick={closePayrollCallback}
+                variant="contained"
+                color="primary"
+                style={{
+                  margin: '0 16px',
+                  marginBottom: '15px',
+                }}
+              >
+                {formatMessage('payroll.summary.approveAndClose')}
+              </Button>
             </div>
             <div style={{
               float: 'right',
@@ -206,6 +227,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   fetchPayroll,
+  closePayroll,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(PaymentPendingPayrollPaymentDialog);
