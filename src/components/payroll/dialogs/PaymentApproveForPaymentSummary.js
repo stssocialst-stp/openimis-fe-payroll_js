@@ -58,11 +58,11 @@ function PaymentApproveForPaymentDialog({
   useEffect(() => {
     if (isOpen && Object.keys(payroll).length > 0) {
       // Calculate total benefits and reconciled benefits
-      const total = payroll.benefitConsumption.length;
-      const selected = payroll.benefitConsumption.filter(
+      const total = payroll.benefitConsumption?.length ?? 0;
+      const selected = (payroll.benefitConsumption ?? []).filter(
         (benefit) => benefit.status === BENEFIT_CONSUMPTION_STATUS.RECONCILED,
       ).length;
-      const approved = payroll.benefitConsumption.filter(
+      const approved = (payroll.benefitConsumption ?? []).filter(
         (benefit) => benefit.status === BENEFIT_CONSUMPTION_STATUS.APPROVE_FOR_PAYMENT,
       ).length;
 
@@ -72,7 +72,7 @@ function PaymentApproveForPaymentDialog({
 
       let totalAmount = 0;
       let reconciledAmount = 0;
-      if (payroll && payroll.benefitConsumption) {
+      if (payroll?.benefitConsumption) {
         payroll.benefitConsumption.forEach((benefit) => {
           if (benefit.benefitAttachment && benefit.benefitAttachment.length > 0) {
             benefit.benefitAttachment.forEach((attachment) => {
