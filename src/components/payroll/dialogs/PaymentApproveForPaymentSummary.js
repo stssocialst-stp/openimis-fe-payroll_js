@@ -119,10 +119,6 @@ function PaymentApproveForPaymentDialog({
     downloadPayroll(payrollUuid, payrollName);
   };
 
-  const isBistp = payrollDetail?.paymentMethod === PAYMENT_METHOD.STRATEGY_BISTP_PAYMENT;
-
-  const bistpSummary = payroll?.bistpSummary || {};
-
   return (
     <>
       <Button
@@ -131,9 +127,7 @@ function PaymentApproveForPaymentDialog({
         color="primary"
         className={classes.button}
       >
-        {isBistp
-          ? formatMessage('payroll.bistp.viewSummary')
-          : formatMessage('payroll.viewReconciliationSummary')}
+        {formatMessage('payroll.viewReconciliationSummary')}
       </Button>
       <Dialog
         open={isOpen}
@@ -157,60 +151,7 @@ function PaymentApproveForPaymentDialog({
           {formatMessageWithValues('payroll.reconciliationSummary', { payrollName: payrollDetail.name })}
         </DialogTitle>
         <DialogContent>
-          {isBistp ? (
-            <Grid container spacing={2} style={{ marginBottom: 16 }}>
-              <Grid item xs={3}>
-                <Paper elevation={3} style={{ padding: '20px', backgroundColor: '#e8f5e9' }}>
-                  <Typography variant="h6" gutterBottom>
-                    {formatMessage('payroll.bistp.reconciled')}
-                  </Typography>
-                  <Typography variant="body1">
-                    {bistpSummary.reconciled ?? 0} / {bistpSummary.total ?? 0}
-                  </Typography>
-                </Paper>
-              </Grid>
-              <Grid item xs={3}>
-                <Paper elevation={3} style={{ padding: '20px', backgroundColor: '#fff3e0' }}>
-                  <Typography variant="h6" gutterBottom>
-                    {formatMessage('payroll.bistp.pending')}
-                  </Typography>
-                  <Typography variant="body1">
-                    {bistpSummary.pending ?? 0}
-                  </Typography>
-                </Paper>
-              </Grid>
-              <Grid item xs={3}>
-                <Paper elevation={3} style={{ padding: '20px', backgroundColor: '#ffebee' }}>
-                  <Typography variant="h6" gutterBottom>
-                    {formatMessage('payroll.bistp.rejected')}
-                  </Typography>
-                  <Typography variant="body1">
-                    {bistpSummary.rejected ?? 0}
-                  </Typography>
-                </Paper>
-              </Grid>
-              <Grid item xs={3}>
-                <Paper elevation={3} style={{ padding: '20px', backgroundColor: '#e3f2fd' }}>
-                  <Typography variant="h6" gutterBottom>
-                    {formatMessage('payroll.bistp.skippedNib')}
-                  </Typography>
-                  <Typography variant="body1">
-                    {bistpSummary.skippedNib ?? 0}
-                  </Typography>
-                </Paper>
-              </Grid>
-              <Grid item xs={3}>
-                <Paper elevation={3} style={{ padding: '20px', backgroundColor: '#fce4ec' }}>
-                  <Typography variant="h6" gutterBottom>
-                    {formatMessage('payroll.bistp.sendFailed')}
-                  </Typography>
-                  <Typography variant="body1">
-                    {bistpSummary.sendFailed ?? 0}
-                  </Typography>
-                </Paper>
-              </Grid>
-            </Grid>
-          ) : (
+          (
           <Grid container spacing={2}>
             <Grid item xs={4}>
               <Paper elevation={3} style={{ padding: '20px' }}>

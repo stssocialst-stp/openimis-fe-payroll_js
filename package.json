@@ -1,6 +1,6 @@
 {
   "name": "@stssocialst-stp/fe-payroll",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "license": "AGPL-3.0-only",
   "description": "openIMIS Frontend Payroll module",
   "repository": {
@@ -22,8 +22,12 @@
     "format": "prettier src -w",
     "prepare": "npm run build"
   },
-  "peerDependency": {
-    "react-intl": "^5.8.1"
+  "peerDependencies": {
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-intl": "^5.8.1",
+    "react-redux": "^7.2.0",
+    "redux": "^4.0.5"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",

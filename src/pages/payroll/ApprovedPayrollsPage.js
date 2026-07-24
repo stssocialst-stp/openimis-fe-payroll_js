@@ -27,7 +27,7 @@ function ApprovedPayrollsPage() {
 
   return (
     <div className={classes.page}>
-      <Helmet title={formatMessage('paymentPoint.page.title')} />
+      <Helmet title={formatMessage('payroll.page.title')} />
       {rights.includes(RIGHT_PAYROLL_SEARCH)
         && <PayrollSearcherApproved classes={classes} />}
     </div>

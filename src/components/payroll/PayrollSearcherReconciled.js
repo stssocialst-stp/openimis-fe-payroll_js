@@ -11,10 +11,9 @@ import {
   clearConfirm,
   journalize,
 } from '@stssocialst-stp/fe-core';
-import LinearProgress from '@material-ui/core/LinearProgress';
 import PayrollFilter from './PayrollFilter';
 import {
-  DEFAULT_PAGE_SIZE, MODULE_NAME, PAYROLL_PAYROLL_ROUTE, RIGHT_PAYROLL_SEARCH, ROWS_PER_PAGE_OPTIONS, PAYROLL_STATUS, PAYMENT_METHOD,
+  DEFAULT_PAGE_SIZE, MODULE_NAME, PAYROLL_PAYROLL_ROUTE, RIGHT_PAYROLL_SEARCH, ROWS_PER_PAGE_OPTIONS, PAYROLL_STATUS,
 } from '../../constants';
 import { fetchPayrolls } from '../../actions';
 import PaymentReconciliationSummaryDialog from './dialogs/PaymentReconciliationSummaryDialog';
@@ -75,7 +74,6 @@ function PayrollSearcherReconciled({
     'payroll.paymentPoint',
     'payroll.status',
     'payroll.paymentMethod',
-    'payroll.bistp.progress',
     'emptyLabel',
   ];
 
@@ -115,7 +113,6 @@ function PayrollSearcherReconciled({
       ? `${payroll.status}` : ''),
     (payroll) => (payroll.paymentMethod
       ? `${payroll.paymentMethod}` : ''),
-    (payroll) => renderBistpProgress(payroll),
     (payroll) => (
       <PayrollReconciliationFilesDialog
         classes={classes}

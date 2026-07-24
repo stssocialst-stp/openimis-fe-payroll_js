@@ -38,7 +38,7 @@ function PayrollsPage() {
 
   return (
     <div className={classes.page}>
-      <Helmet title={formatMessage('paymentPoint.page.title')} />
+      <Helmet title={formatMessage('payroll.page.title')} />
       {rights.includes(RIGHT_PAYROLL_SEARCH)
         && <PayrollSearcher />}
       {rights.includes(RIGHT_PAYROLL_CREATE)
@@ -48,7 +48,7 @@ function PayrollsPage() {
               <AddIcon />
             </Fab>
           </div>,
-          formatMessage('createButton.tooltip'),
+          formatMessage('tooltip.createButton'),
         )}
     </div>
   );

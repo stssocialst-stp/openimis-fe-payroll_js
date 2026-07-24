@@ -27,7 +27,7 @@ function PendingPayrollsPage() {
 
   return (
     <div className={classes.page}>
-      <Helmet title={formatMessage('paymentPoint.page.title')} />
+      <Helmet title={formatMessage('payroll.page.title')} />
       {rights.includes(RIGHT_PAYROLL_SEARCH)
         && <PayrollSearcherPending classes={classes} />}
     </div>
