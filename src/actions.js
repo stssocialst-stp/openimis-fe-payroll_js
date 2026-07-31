@@ -53,6 +53,10 @@ const BENEFIT_ATTACHMENT_PROJECTION = () => [
   'bill{id, code, terms, amountTotal, datePayed}',
 ];
 
+const BISTP_SUMMARY_PROJECTION = () => [
+  'bistpSummary { total reconciled rejected pending skippedNib sendFailed }',
+];
+
 const PAYROLL_PROJECTION = (modulesManager) => [
   'id',
   'name',
@@ -66,6 +70,7 @@ const PAYROLL_PROJECTION = (modulesManager) => [
   'dateValidFrom',
   'dateValidTo',
   'isDeleted',
+  ...BISTP_SUMMARY_PROJECTION(),
 ];
 
 const PAYROLL_SEARCHER_PROJECTION = (modulesManager) => [
@@ -81,6 +86,7 @@ const PAYROLL_SEARCHER_PROJECTION = (modulesManager) => [
   'dateValidFrom',
   'dateValidTo',
   'isDeleted',
+  ...BISTP_SUMMARY_PROJECTION(),
 ];
 
 const CSV_RECONCILIATION_PROJECTION = () => [
