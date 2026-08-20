@@ -219,6 +219,19 @@ function PaymentApproveForPaymentDialog({
                 {formatMessage('payroll.summary.approveAndClose')}
               </Button>
               <Button
+                onClick={() => makePaymentForPayrollCallback(payrollDetail)}
+                variant="contained"
+                color="primary"
+                style={{
+                  margin: '0 16px',
+                  marginBottom: '15px',
+                }}
+              >
+                {payrollDetail.paymentMethod === PAYMENT_METHOD.STRATEGY_BISTP_PAYMENT
+                  ? formatMessage('payroll.bistp.submitPayment')
+                  : formatMessage('payroll.summary.makePayment')}
+              </Button>
+              <Button
                 onClick={() => downloadPayrollData(payrollDetail.id, payrollDetail.name)}
                 variant="contained"
                 color="primary"
@@ -246,21 +259,6 @@ function PaymentApproveForPaymentDialog({
               paddingRight: '16px',
             }}
             >
-              {(payrollDetail.paymentMethod === PAYMENT_METHOD.STRATEGY_ONLINE_PAYMENT
-                || payrollDetail.paymentMethod === PAYMENT_METHOD.STRATEGY_BISTP_PAYMENT) && (
-                <Button
-                  onClick={() => makePaymentForPayrollCallback(payrollDetail)}
-                  variant="contained"
-                  color="primary"
-                  style={{
-                    margin: '0 16px',
-                  }}
-                >
-                  {payrollDetail.paymentMethod === PAYMENT_METHOD.STRATEGY_BISTP_PAYMENT
-                    ? formatMessage('payroll.bistp.submitPayment')
-                    : formatMessage('payroll.summary.makePayment')}
-                </Button>
-              )}
               <Button
                 onClick={handleClose}
                 variant="outlined"
