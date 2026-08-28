@@ -73,6 +73,7 @@ function PayrollTab({
               onChange={handleChange}
               isSelected={isSelected}
               tabStyle={tabStyle}
+              payroll={payroll}
               payrollUuid={payrollUuid}
               isInTask={isInTask}
               isPayrollFromFailedInvoices={isPayrollFromFailedInvoices}
@@ -117,6 +118,7 @@ function PayrollTab({
         payrollUuid={payrollUuid}
         isInTask={isInTask}
         isPayrollFromFailedInvoices={isPayrollFromFailedInvoices}
+        payroll={payroll}
       />
     </Paper>
   );

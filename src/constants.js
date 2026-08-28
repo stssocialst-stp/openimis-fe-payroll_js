@@ -23,6 +23,7 @@ export const MAX_LENGTH = {
 export const MODULE_NAME = 'payroll';
 
 export const BENEFIT_CONSUMPTION_LIST_TAB_VALUE = 'benefitConsumptionsTab';
+export const BISTP_PAYMENT_STATUS_TAB_VALUE = 'bistpPaymentStatusTab';
 export const PAYROLL_TASK_TAB_VALUE = 'payrollTaskTab';
 export const PAYROLL_PAYMENT_FILES_TAB_VALUE = 'payrollPaymentFilesTab';
 export const PAYROLL_TABS_LABEL_CONTRIBUTION_KEY = 'payroll.TabPanel.label';

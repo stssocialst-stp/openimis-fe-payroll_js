@@ -44,6 +44,10 @@ import {
 } from './components/payroll/PayrollTaskTabPanel';
 import { PayrollDeleteTaskItemFormatters, PayrollDeleteTaskTableHeaders } from './components/tasks/PayrollDeleteTasks';
 import { PayrollPaymentFilesTabLabel, PayrollPaymentFilesTabPanel } from './components/payroll/PayrollPaymentFilesTab';
+import {
+  BistpPaymentStatusTabLabel,
+  BistpPaymentStatusPanel,
+} from './components/payroll/BistpPaymentStatusPanel';
 import PendingPayrollsPage from './pages/payroll/PendingPayrollsPage';
 import BeneficiaryManagementPage from './pages/payroll/BeneficiaryManagementPage';
 
@@ -132,8 +136,12 @@ const DEFAULT_CONFIG = {
       id: 'legalAndFinance.beneficiariesManagement',
     },
   ],
-  'payroll.TabPanel.label': [BenefitConsumptionsTabLabel, PayrollTaskTabLabel, PayrollPaymentFilesTabLabel],
-  'payroll.TabPanel.panel': [BenefitConsumptionsTabPanel, PayrollTaskTabPanel, PayrollPaymentFilesTabPanel],
+  'payroll.TabPanel.label': [
+    BenefitConsumptionsTabLabel, PayrollTaskTabLabel, PayrollPaymentFilesTabLabel, BistpPaymentStatusTabLabel,
+  ],
+  'payroll.TabPanel.panel': [
+    BenefitConsumptionsTabPanel, PayrollTaskTabPanel, PayrollPaymentFilesTabPanel, BistpPaymentStatusPanel,
+  ],
   'tasksManagement.tasks': [{
     text: <FormattedMessage module="payroll" id="payroll.tasks.update.title" />,
     tableHeaders: PayrollTaskTableHeaders,
