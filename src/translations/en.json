@@ -167,5 +167,27 @@
     "payroll.bistp.status.pending": "Sent to Bank",
     "payroll.bistp.status.skippedNib": "No NIB",
     "payroll.bistp.status.sendFailed": "Send Failed",
-    "payroll.bistp.progress": "BISTP Progress"
+    "payroll.bistp.progress": "BISTP Progress",
+
+    "payroll.route.beneficiariesManagement": "Beneficiary Management",
+    "payroll.beneficiaries.management.title": "Beneficiary Management",
+    "payroll.beneficiaries.management.noPermission": "You do not have permission to manage beneficiaries.",
+    "payroll.beneficiaries.backup.title": "Backup",
+    "payroll.beneficiaries.payrollId.optional": "Payroll UUID (optional)",
+    "payroll.beneficiaries.backup.button": "Download Backup",
+    "payroll.beneficiaries.limpar.title": "Clean Beneficiaries",
+    "payroll.beneficiaries.limpar.forceSkipFinancial": "Force / skip protected financial records",
+    "payroll.beneficiaries.limpar.dryRun": "Simulate (dry-run)",
+    "payroll.beneficiaries.limpar.execute": "Execute Cleanup",
+    "payroll.beneficiaries.limpar.confirm.title": "Confirm cleanup",
+    "payroll.beneficiaries.limpar.confirm.message": "This will soft-delete all active beneficiaries. This action cannot be undone without a previous backup.",
+    "payroll.beneficiaries.limpar.confirm.forceNote": "Protected RECONCILED / APPROVE_FOR_PAYMENT records will be skipped.",
+    "payroll.beneficiaries.cancel": "Cancel",
+    "payroll.beneficiaries.confirm": "Confirm",
+    "payroll.beneficiaries.import.title": "Import from Excel",
+    "payroll.beneficiaries.import.button": "Import",
+    "payroll.beneficiaries.restore.title": "Restore from Backup",
+    "payroll.beneficiaries.restore.button": "Restore",
+    "payroll.beneficiaries.dryRun": "Dry-run (simulate only)",
+    "payroll.beneficiaries.output": "Command output"
 }

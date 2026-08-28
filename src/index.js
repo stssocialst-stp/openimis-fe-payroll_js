@@ -7,7 +7,12 @@ import { PinDrop } from '@material-ui/icons';
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
 
 import { FormattedMessage } from '@stssocialst-stp/fe-core';
-import { RIGHT_PAYMENT_POINT_SEARCH, RIGHT_PAYROLL_CREATE, RIGHT_PAYROLL_SEARCH } from './constants';
+import {
+  RIGHT_PAYMENT_POINT_SEARCH,
+  RIGHT_PAYROLL_CREATE,
+  RIGHT_PAYROLL_SEARCH,
+  RIGHT_BENEFICIARY_MANAGEMENT,
+} from './constants';
 import reducer from './reducer';
 import messages_en from './translations/en.json';
 import PaymentPointPage from './pages/payment-point/PaymentPointPage';
@@ -41,6 +46,7 @@ import {
 import { PayrollDeleteTaskItemFormatters, PayrollDeleteTaskTableHeaders } from './components/tasks/PayrollDeleteTasks';
 import { PayrollPaymentFilesTabLabel, PayrollPaymentFilesTabPanel } from './components/payroll/PayrollPaymentFilesTab';
 import PendingPayrollsPage from './pages/payroll/PendingPayrollsPage';
+import BeneficiaryManagementPage from './pages/payroll/BeneficiaryManagementPage';
 
 const ROUTE_PAYMENT_POINTS = 'paymentPoints';
 const ROUTE_PAYMENT_POINT = 'paymentPoints/paymentPoint';
@@ -48,6 +54,7 @@ const ROUTE_PAYROLLS = 'payrolls';
 const ROUTE_PAYROLLS_APPROVED = 'payrollsApproved';
 const ROUTE_PAYROLLS_PENDING = 'payrollsPending';
 const ROUTE_PAYROLLS_RECONCILED = 'payrollsReconciled';
+const ROUTE_BENEFICIARIES_MANAGEMENT = 'beneficiariesManagement';
 const ROUTE_PAYROLL = 'payrolls/payroll';
 
 const DEFAULT_CONFIG = {
@@ -60,6 +67,7 @@ const DEFAULT_CONFIG = {
     { key: 'payroll.route.payrollsApproved', ref: ROUTE_PAYROLLS_APPROVED },
     { key: 'payroll.route.payrollsPending', ref: ROUTE_PAYROLLS_PENDING },
     { key: 'payroll.route.payrollsReconciled', ref: ROUTE_PAYROLLS_RECONCILED },
+    { key: 'payroll.route.beneficiariesManagement', ref: ROUTE_BENEFICIARIES_MANAGEMENT },
     { key: 'payroll.route.payroll', ref: ROUTE_PAYROLL },
     { key: 'payroll.PaymentPointPicker', ref: PaymentPointPicker },
     { key: 'payroll.PaymentPointPicker.projection', ref: ['id', 'name', 'location'] },
@@ -72,7 +80,10 @@ const DEFAULT_CONFIG = {
     { path: ROUTE_PAYROLLS, component: PayrollsPage },
     { path: ROUTE_PAYROLLS_APPROVED, component: ApprovedPayrollsPage },
     { path: ROUTE_PAYROLLS_PENDING, component: PendingPayrollsPage },
-    { path: ROUTE_PAYROLLS_RECONCILED, component: ReconciledPayrollsPage },
+    {
+      path: ROUTE_PAYROLLS_RECONCILED, component: ReconciledPayrollsPage },
+    {
+      path: ROUTE_BENEFICIARIES_MANAGEMENT, component: BeneficiaryManagementPage },
     {
       path: `${ROUTE_PAYROLL}/:payroll_uuid?/:createPayrollFromFailedInvoices?/:benefitPlanId?`,
       component: PayrollPage,
@@ -113,6 +124,13 @@ const DEFAULT_CONFIG = {
       route: `/${ROUTE_PAYROLLS_RECONCILED}`,
       filter: (rights) => rights.includes(RIGHT_PAYROLL_SEARCH),
       id: 'legalAndFinance.payrollsReconciled',
+    },
+    {
+      text: <FormattedMessage module="payroll" id="payroll.route.beneficiariesManagement" />,
+      icon: <MonetizationOnIcon />,
+      route: `/${ROUTE_BENEFICIARIES_MANAGEMENT}`,
+      filter: (rights) => rights.includes(RIGHT_BENEFICIARY_MANAGEMENT),
+      id: 'legalAndFinance.beneficiariesManagement',
     },
   ],
   'payroll.TabPanel.label': [BenefitConsumptionsTabLabel, PayrollTaskTabLabel, PayrollPaymentFilesTabLabel],
