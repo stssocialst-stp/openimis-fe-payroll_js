@@ -1,6 +1,6 @@
 {
   "name": "@stssocialst-stp/fe-payroll",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "license": "AGPL-3.0-only",
   "description": "openIMIS Frontend Payroll module",
   "repository": {

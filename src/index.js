@@ -11,7 +11,6 @@ import {
   RIGHT_PAYMENT_POINT_SEARCH,
   RIGHT_PAYROLL_CREATE,
   RIGHT_PAYROLL_SEARCH,
-  RIGHT_BENEFICIARY_MANAGEMENT,
 } from './constants';
 import reducer from './reducer';
 import messages_en from './translations/en.json';
@@ -129,7 +128,7 @@ const DEFAULT_CONFIG = {
       text: <FormattedMessage module="payroll" id="payroll.route.beneficiariesManagement" />,
       icon: <MonetizationOnIcon />,
       route: `/${ROUTE_BENEFICIARIES_MANAGEMENT}`,
-      filter: (rights) => rights.includes(RIGHT_BENEFICIARY_MANAGEMENT),
+      filter: (rights) => rights.includes(RIGHT_PAYROLL_SEARCH),
       id: 'legalAndFinance.beneficiariesManagement',
     },
   ],

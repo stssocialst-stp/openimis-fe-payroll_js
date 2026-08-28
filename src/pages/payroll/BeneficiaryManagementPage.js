@@ -21,7 +21,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import { Alert } from '@material-ui/lab';
-import { RIGHT_BENEFICIARY_MANAGEMENT, MODULE_NAME } from '../../constants';
+import { RIGHT_PAYROLL_SEARCH, MODULE_NAME } from '../../constants';
 import { useBeneficiarios } from '../../hooks/useBeneficiarios';
 
 const useStyles = makeStyles((theme) => ({
@@ -87,7 +87,7 @@ function BeneficiaryManagementPage() {
   const [restoreFile, setRestoreFile] = useState(null);
   const [restoreDryRun, setRestoreDryRun] = useState(true);
 
-  if (!rights.includes(RIGHT_BENEFICIARY_MANAGEMENT)) {
+  if (!rights.includes(RIGHT_PAYROLL_SEARCH)) {
     return (
       <div className={classes.page}>
         <Helmet title={formatMessage('payroll.beneficiaries.management.title')} />
