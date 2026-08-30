@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import {
   Grid, LinearProgress, Paper, Tab, Typography,
 } from '@material-ui/core';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import { PublishedComponent, useModulesManager, useTranslations } from '@stssocialst-stp/fe-core';
 import { makeStyles } from '@material-ui/styles';
 import {
@@ -9,6 +11,7 @@ import {
   MODULE_NAME,
   PAYMENT_METHOD,
 } from '../../constants';
+import { fetchBistpSummary } from '../../actions';
 
 const useStyles = makeStyles((theme) => ({
   paper: theme.paper.paper,
@@ -61,59 +64,27 @@ function BistpMetric({ label, value, classes }) {
   );
 }
 
-function BistpPaymentStatusPanel({ value, payrollUuid, payroll }) {
+function BistpPaymentStatusPanel({
+  value, payrollUuid, payroll, fetchBistpSummary, bistpSummary,
+}) {
   const classes = useStyles();
   const modulesManager = useModulesManager();
   const { formatMessage } = useTranslations(MODULE_NAME, modulesManager);
-  const [summary, setSummary] = useState({
-    total: 0,
-    pendentes: 0,
-    enviados: 0,
-    confirmados: 0,
-    rejeitados: 0,
-  });
 
   useEffect(() => {
     if (payrollUuid) {
-      const query = `
-        query ResumoPagamentos($payrollId: UUID!) {
-          total:       benefitConsumptionByPayroll(payrollUuid: $payrollId, first: 0) { totalCount }
-          pendentes:   benefitConsumptionByPayroll(payrollUuid: $payrollId, status: ACCEPTED, first: 0) { totalCount }
-          enviados:    benefitConsumptionByPayroll(payrollUuid: $payrollId, status: APPROVE_FOR_PAYMENT, first: 0) { totalCount }
-          confirmados: benefitConsumptionByPayroll(payrollUuid: $payrollId, status: RECONCILED, first: 0) { totalCount }
-          rejeitados:  benefitConsumptionByPayroll(payrollUuid: $payrollId, status: REJECTED, first: 0) { totalCount }
-        }
-      `;
-
-      // Using fetch directly as suggested in the guide to avoid Redux complications for a simple summary
-      fetch('/api/graphql', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('token')}`,
-        },
-        body: JSON.stringify({ query, variables: { payrollId: payrollUuid } }),
-      })
-        .then((response) => response.json())
-        .then((result) => {
-          if (result.data) {
-            setSummary({
-              total: result.data.total.totalCount,
-              pendentes: result.data.pendentes.totalCount,
-              enviados: result.data.enviados.totalCount,
-              confirmados: result.data.confirmados.totalCount,
-              rejeitados: result.data.rejeitados.totalCount,
-            });
-          }
-        });
+      fetchBistpSummary(payrollUuid);
     }
   }, [payrollUuid]);
 
   if (payroll?.paymentMethod !== PAYMENT_METHOD.STRATEGY_BISTP_PAYMENT) return null;
 
-  const total = summary.total || 0;
-  const reconciled = summary.confirmados || 0;
-  const progress = total > 0 ? Math.min((reconciled / total) * 100, 100) : 0;
+  const total = bistpSummary?.total?.totalCount || 0;
+  const confirmados = bistpSummary?.confirmados?.totalCount || 0;
+  const pendentes = bistpSummary?.pendentes?.totalCount || 0;
+  const rejeitados = bistpSummary?.rejeitados?.totalCount || 0;
+  const enviados = bistpSummary?.enviados?.totalCount || 0;
+  const progress = total > 0 ? Math.min((confirmados / total) * 100, 100) : 0;
 
   return (
     <PublishedComponent
@@ -134,27 +105,27 @@ function BistpPaymentStatusPanel({ value, payrollUuid, payroll }) {
               <BistpMetric
                 classes={classes}
                 label={formatMessage('payroll.bistp.status.reconciled')}
-                value={summary.confirmados || 0}
+                value={confirmados}
               />
               <BistpMetric
                 classes={classes}
                 label={formatMessage('payroll.bistp.status.pending')}
-                value={summary.pendentes || 0}
+                value={pendentes}
               />
               <BistpMetric
                 classes={classes}
                 label={formatMessage('payroll.bistp.status.rejected')}
-                value={summary.rejeitados || 0}
+                value={rejeitados}
               />
               <BistpMetric
                 classes={classes}
                 label={formatMessage('payroll.bistp.status.enviados')}
-                value={summary.enviados || 0}
+                value={enviados}
               />
             </Grid>
             <div className={classes.progress}>
               <Typography variant="body2">
-                {formatMessage('payroll.bistp.progress')}: {reconciled}/{total}
+                {formatMessage('payroll.bistp.progress')}: {confirmados}/{total}
               </Typography>
               <LinearProgress variant="determinate" value={progress} />
             </div>
@@ -165,4 +136,14 @@ function BistpPaymentStatusPanel({ value, payrollUuid, payroll }) {
   );
 }
 
+const mapStateToProps = (state) => ({
+  bistpSummary: state.payroll.bistpSummary,
+});
+
+const mapDispatchToProps = (dispatch) => bindActionCreators(
+  { fetchBistpSummary },
+  dispatch,
+);
+
+export default connect(mapStateToProps, mapDispatchToProps)(BistpPaymentStatusPanel);
 export { BistpPaymentStatusTabLabel, BistpPaymentStatusPanel };

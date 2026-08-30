@@ -34,6 +34,7 @@ export const ACTION_TYPE = {
   MAKE_PAYMENT_PAYROLL: 'PAYROLL_MUTATION_MAKE_PAYMENT_PAYROLL',
   GET_PAYROLL_PAYMENT_FILES: 'GET_PAYROLL_PAYMENT_FILES',
   BENEFITS_SUMMARY: 'PAYROLL_BENEFITS_SUMMARY',
+  GET_BISTP_SUMMARY: 'PAYROLL_BISTP_SUMMARY',
   DELETE_BENEFIT_CONSUMPTION: 'BENEFIT_CONSUMPTION_MUTATION_DELETE_BENEFIT_CONSUMPTION',
 };
 
@@ -118,6 +119,10 @@ const STORE_STATE = {
   benefitsSummaryError: null,
   fetchingBenefitsSummary: true,
   fetchedBenefitsSummary: false,
+  fetchingBistpSummary: false,
+  fetchedBistpSummary: false,
+  bistpSummary: {},
+  errorBistpSummary: null,
 };
 
 function reducer(
@@ -437,6 +442,28 @@ function reducer(
         ...state,
         fetchingBenefitsSummary: false,
         benefitsSummaryError: formatServerError(action.payload),
+      };
+    case REQUEST(ACTION_TYPE.GET_BISTP_SUMMARY):
+      return {
+        ...state,
+        fetchingBistpSummary: true,
+        fetchedBistpSummary: false,
+        bistpSummary: {},
+        errorBistpSummary: null,
+      };
+    case SUCCESS(ACTION_TYPE.GET_BISTP_SUMMARY):
+      return {
+        ...state,
+        fetchingBistpSummary: false,
+        fetchedBistpSummary: true,
+        bistpSummary: action.payload.data,
+        errorBistpSummary: formatGraphQLError(action.payload),
+      };
+    case ERROR(ACTION_TYPE.GET_BISTP_SUMMARY):
+      return {
+        ...state,
+        fetchingBistpSummary: false,
+        errorBistpSummary: formatServerError(action.payload),
       };
     case REQUEST(ACTION_TYPE.MUTATION):
       return dispatchMutationReq(state, action);

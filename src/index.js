@@ -44,10 +44,8 @@ import {
 } from './components/payroll/PayrollTaskTabPanel';
 import { PayrollDeleteTaskItemFormatters, PayrollDeleteTaskTableHeaders } from './components/tasks/PayrollDeleteTasks';
 import { PayrollPaymentFilesTabLabel, PayrollPaymentFilesTabPanel } from './components/payroll/PayrollPaymentFilesTab';
-import {
-  BistpPaymentStatusTabLabel,
-  BistpPaymentStatusPanel,
-} from './components/payroll/BistpPaymentStatusPanel';
+import BistpPaymentStatusPanel from './components/payroll/BistpPaymentStatusPanel';
+import { BistpPaymentStatusTabLabel } from './components/payroll/BistpPaymentStatusPanel';
 import PendingPayrollsPage from './pages/payroll/PendingPayrollsPage';
 import BeneficiaryManagementPage from './pages/payroll/BeneficiaryManagementPage';
 
