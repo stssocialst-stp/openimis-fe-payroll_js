@@ -167,6 +167,7 @@
     "payroll.bistp.status.pending": "Sent to Bank",
     "payroll.bistp.status.skippedNib": "No NIB",
     "payroll.bistp.status.sendFailed": "Send Failed",
+    "payroll.bistp.status.enviados": "Sent to BISTP",
     "payroll.bistp.progress": "BISTP Progress",
 
     "payroll.route.beneficiariesManagement": "Beneficiary Management",
