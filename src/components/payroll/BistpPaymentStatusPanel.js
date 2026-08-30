@@ -78,10 +78,10 @@ function BistpPaymentStatusPanel({ value, payrollUuid, payroll }) {
       const query = `
         query ResumoPagamentos($payrollId: UUID!) {
           total:       benefitConsumptionByPayroll(payrollUuid: $payrollId, first: 0) { totalCount }
-          pendentes:   benefitConsumptionByPayroll(payrollUuid: $payrollId, status: "ACCEPTED", first: 0) { totalCount }
-          enviados:    benefitConsumptionByPayroll(payrollUuid: $payrollId, status: "APPROVE_FOR_PAYMENT", first: 0) { totalCount }
-          confirmados: benefitConsumptionByPayroll(payrollUuid: $payrollId, status: "RECONCILED", first: 0) { totalCount }
-          rejeitados:  benefitConsumptionByPayroll(payrollUuid: $payrollId, status: "REJECTED", first: 0) { totalCount }
+          pendentes:   benefitConsumptionByPayroll(payrollUuid: $payrollId, status: ACCEPTED, first: 0) { totalCount }
+          enviados:    benefitConsumptionByPayroll(payrollUuid: $payrollId, status: APPROVE_FOR_PAYMENT, first: 0) { totalCount }
+          confirmados: benefitConsumptionByPayroll(payrollUuid: $payrollId, status: RECONCILED, first: 0) { totalCount }
+          rejeitados:  benefitConsumptionByPayroll(payrollUuid: $payrollId, status: REJECTED, first: 0) { totalCount }
         }
       `;
 
