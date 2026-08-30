@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Grid, LinearProgress, Paper, Tab, Typography,
 } from '@material-ui/core';
@@ -65,12 +65,54 @@ function BistpPaymentStatusPanel({ value, payrollUuid, payroll }) {
   const classes = useStyles();
   const modulesManager = useModulesManager();
   const { formatMessage } = useTranslations(MODULE_NAME, modulesManager);
+  const [summary, setSummary] = useState({
+    total: 0,
+    pendentes: 0,
+    enviados: 0,
+    confirmados: 0,
+    rejeitados: 0,
+  });
+
+  useEffect(() => {
+    if (payrollUuid) {
+      const query = `
+        query ResumoPagamentos($payrollId: UUID!) {
+          total:       benefitConsumptionByPayroll(payrollUuid: $payrollId, first: 0) { totalCount }
+          pendentes:   benefitConsumptionByPayroll(payrollUuid: $payrollId, status: "ACCEPTED", first: 0) { totalCount }
+          enviados:    benefitConsumptionByPayroll(payrollUuid: $payrollId, status: "APPROVE_FOR_PAYMENT", first: 0) { totalCount }
+          confirmados: benefitConsumptionByPayroll(payrollUuid: $payrollId, status: "RECONCILED", first: 0) { totalCount }
+          rejeitados:  benefitConsumptionByPayroll(payrollUuid: $payrollId, status: "REJECTED", first: 0) { totalCount }
+        }
+      `;
+
+      // Using fetch directly as suggested in the guide to avoid Redux complications for a simple summary
+      fetch('/api/graphql', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        },
+        body: JSON.stringify({ query, variables: { payrollId: payrollUuid } }),
+      })
+        .then((response) => response.json())
+        .then((result) => {
+          if (result.data) {
+            setSummary({
+              total: result.data.total.totalCount,
+              pendentes: result.data.pendentes.totalCount,
+              enviados: result.data.enviados.totalCount,
+              confirmados: result.data.confirmados.totalCount,
+              rejeitados: result.data.rejeitados.totalCount,
+            });
+          }
+        });
+    }
+  }, [payrollUuid]);
 
   if (payroll?.paymentMethod !== PAYMENT_METHOD.STRATEGY_BISTP_PAYMENT) return null;
 
-  const summary = payroll?.bistpSummary || {};
   const total = summary.total || 0;
-  const reconciled = summary.reconciled || 0;
+  const reconciled = summary.confirmados || 0;
   const progress = total > 0 ? Math.min((reconciled / total) * 100, 100) : 0;
 
   return (
@@ -92,27 +134,22 @@ function BistpPaymentStatusPanel({ value, payrollUuid, payroll }) {
               <BistpMetric
                 classes={classes}
                 label={formatMessage('payroll.bistp.status.reconciled')}
-                value={summary.reconciled || 0}
+                value={summary.confirmados || 0}
               />
               <BistpMetric
                 classes={classes}
                 label={formatMessage('payroll.bistp.status.pending')}
-                value={summary.pending || 0}
+                value={summary.pendentes || 0}
               />
               <BistpMetric
                 classes={classes}
                 label={formatMessage('payroll.bistp.status.rejected')}
-                value={summary.rejected || 0}
+                value={summary.rejeitados || 0}
               />
               <BistpMetric
                 classes={classes}
-                label={formatMessage('payroll.bistp.status.sendFailed')}
-                value={summary.sendFailed || 0}
-              />
-              <BistpMetric
-                classes={classes}
-                label={formatMessage('payroll.bistp.status.skippedNib')}
-                value={summary.skippedNib || 0}
+                label={formatMessage('payroll.bistp.status.enviados')}
+                value={summary.enviados || 0}
               />
             </Grid>
             <div className={classes.progress}>
