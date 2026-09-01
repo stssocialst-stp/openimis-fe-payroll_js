@@ -1,6 +1,8 @@
 /* eslint-disable max-len */
-import React, { useState } from 'react';
-import { Paper, Grid } from '@material-ui/core';
+import React, { useState, useEffect } from 'react';
+import {
+  Paper, Grid, LinearProgress, Typography,
+} from '@material-ui/core';
 import {
   Contributions,
   useModulesManager,
@@ -19,6 +21,7 @@ import {
 import PayrollPaymentDataUploadDialog from './dialogs/PayrollPaymentDataUploadDialog';
 import PaymentApproveForPaymentSummary from './dialogs/PaymentApproveForPaymentSummary';
 import downloadPayroll from '../../utils/export';
+import useAsyncPayrollProgress from '../../hooks/useAsyncPayrollProgress';
 
 const useStyles = makeStyles((theme) => ({
   paper: theme.paper.paper,
@@ -57,12 +60,50 @@ function PayrollTab({
   const modulesManager = useModulesManager();
   const { formatMessage } = useTranslations(MODULE_NAME, modulesManager);
 
+  const { isGenerating, benefitCount, timedOut } = useAsyncPayrollProgress({
+    payrollUuid,
+    payrollStatus: payroll?.status,
+  });
+
+  const [generationComplete, setGenerationComplete] = useState(false);
+  const [refreshBenefitsKey, setRefreshBenefitsKey] = useState(0);
+
+  useEffect(() => {
+    if (!isGenerating && benefitCount > 0 && !generationComplete) {
+      setGenerationComplete(true);
+      setRefreshBenefitsKey((k) => k + 1);
+    }
+  }, [isGenerating, benefitCount, generationComplete]);
+
   const downloadPayrollData = (payrollUuid, payrollName) => {
     downloadPayroll(payrollUuid, payrollName);
   };
 
   return (
     <Paper className={classes.paper}>
+      {(isGenerating || timedOut) && payrollUuid && !isPayrollFromFailedInvoices && (
+        <Grid container spacing={2} style={{ padding: '16px' }}>
+          <Grid item xs={12}>
+            <Typography variant="body1">
+              {timedOut
+                ? formatMessage('payroll.async.timedOut')
+                : formatMessage('payroll.async.generating')}
+            </Typography>
+            {!timedOut && (
+              <LinearProgress
+                variant="indeterminate"
+                style={{ marginTop: '8px' }}
+              />
+            )}
+            <Typography variant="caption" style={{ display: 'block', marginTop: '4px' }}>
+              {!timedOut && formatMessage('payroll.async.createdSoFar', { benefitCount })}
+            </Typography>
+            <Typography variant="caption" style={{ display: 'block' }}>
+              {!timedOut && formatMessage('payroll.async.note')}
+            </Typography>
+          </Grid>
+        </Grid>
+      )}
       <Grid container className={`${classes.tableTitle} ${classes.tabs}`}>
         <div style={{ width: '100%' }}>
           <div style={{ float: 'left' }}>
@@ -119,6 +160,7 @@ function PayrollTab({
         isInTask={isInTask}
         isPayrollFromFailedInvoices={isPayrollFromFailedInvoices}
         payroll={payroll}
+        refreshBenefitsKey={refreshBenefitsKey}
       />
     </Paper>
   );

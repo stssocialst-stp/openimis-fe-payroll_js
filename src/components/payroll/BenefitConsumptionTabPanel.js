@@ -24,7 +24,7 @@ function BenefitConsumptionsTabLabel({
 }
 
 function BenefitConsumptionsTabPanel({
-  value, rights, payrollUuid, isPayrollFromFailedInvoices,
+  value, rights, payrollUuid, isPayrollFromFailedInvoices, refreshBenefitsKey,
 }) {
   return (
     <PublishedComponent
@@ -36,6 +36,7 @@ function BenefitConsumptionsTabPanel({
       {
         rights.includes(RIGHT_PAYROLL_SEARCH) && payrollUuid && (
         <BenefitConsumptionSearcher
+          key={refreshBenefitsKey}
           rights={rights}
           payrollUuid={payrollUuid}
           isPayrollFromFailedInvoices={isPayrollFromFailedInvoices}

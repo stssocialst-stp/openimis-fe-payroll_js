@@ -170,6 +170,11 @@
     "payroll.bistp.status.enviados": "Sent to BISTP",
     "payroll.bistp.progress": "BISTP Progress",
 
+    "payroll.async.generating": "Generating beneficiaries in background...",
+    "payroll.async.createdSoFar": "{benefitCount} created so far",
+    "payroll.async.note": "This process may take a few minutes. You can close this page - the process continues in the background.",
+    "payroll.async.timedOut": "The background generation process took too long. Please refresh this page to check the current status.",
+
     "payroll.route.beneficiariesManagement": "Beneficiary Management",
     "payroll.beneficiaries.management.title": "Beneficiary Management",
     "payroll.beneficiaries.management.noPermission": "You do not have permission to manage beneficiaries.",
