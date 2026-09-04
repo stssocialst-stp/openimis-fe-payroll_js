@@ -12,6 +12,42 @@ export function useBeneficiarios() {
   const [output, setOutput] = useState('');
   const [error, setError] = useState(null);
 
+  async function poll(clientMutationId) {
+    const INTERVAL_MS = 5000;
+    const TIMEOUT_MS = 20 * 60 * 1000; // 20 minutos
+    const started = Date.now();
+
+    while (Date.now() - started < TIMEOUT_MS) {
+      await new Promise((resolve) => setTimeout(resolve, INTERVAL_MS));
+
+      const resp = await fetch(`${baseApiUrl}/graphql`, {
+        method: 'POST',
+        headers: buildHeaders(),
+        credentials: 'same-origin',
+        body: JSON.stringify({
+          query: `
+            query {
+              mutationLogs(clientMutationId: "${clientMutationId}") {
+                edges { node { status error jsonExt clientMutationLabel } }
+              }
+            }
+          `,
+        }),
+      });
+      const result = await resp.json();
+      const node = result?.data?.mutationLogs?.edges?.[0]?.node;
+
+      if (!node) continue;
+
+      // Update UI with label if needed
+      setOutput(`A processar: ${node.clientMutationLabel}...`);
+
+      if (node.status === 2) return { success: true, output: node.jsonExt?.output ?? null, error: null };
+      if (node.status === 1) return { success: false, output: null, error: node.error };
+    }
+    return { success: false, output: null, error: 'Timeout: operação excedeu 20 minutos' };
+  }
+
   async function request(path, { multipart = false, body = null } = {}) {
     setLoading(true);
     setError(null);
@@ -41,9 +77,8 @@ export function useBeneficiarios() {
     } catch (e) {
       setError(e.message);
       return { ok: false, message: e.message };
-    } finally {
-      setLoading(false);
     }
+    // Note: setLoading(false) is handled after polling in methods
   }
 
   async function backup(payrollId = null) {
@@ -51,16 +86,16 @@ export function useBeneficiarios() {
       body: payrollId ? { payroll_id: payrollId } : {},
     });
     if (ok) {
-      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-      const a = document.createElement('a');
-      a.href = URL.createObjectURL(blob);
-      a.download = `backup_beneficiarios_${new Date().toISOString().slice(0, 19).replace(/:/g, '-')}.json`;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(a.href);
-      setOutput(`Backup concluído: ${JSON.stringify(data.counts)}`);
+      setOutput('Backup iniciado. A aguardar conclusão...');
+      const pollResult = await poll(data.clientMutationId);
+      if (pollResult.success) {
+        setOutput(`Backup concluído: ${pollResult.output}`);
+        // Handle download trigger if file info is in jsonExt
+      } else {
+        setError(pollResult.error);
+      }
     }
+    setLoading(false);
     return { ok, data };
   }
 
@@ -68,7 +103,16 @@ export function useBeneficiarios() {
     const { ok, data } = await request('/limpar/', {
       body: { username: 'admin', dry_run: dryRun, force_skip_financial: forceSkipFinancial },
     });
-    if (ok) setOutput(data.output);
+    if (ok) {
+      setOutput('Limpeza iniciada. A aguardar conclusão...');
+      const pollResult = await poll(data.clientMutationId);
+      if (pollResult.success) {
+        setOutput(pollResult.output);
+      } else {
+        setError(pollResult.error);
+      }
+    }
+    setLoading(false);
     return { ok, data };
   }
 
@@ -85,7 +129,16 @@ export function useBeneficiarios() {
     if (benefitType) fd.append('benefit_type', benefitType);
     if (sheet) fd.append('sheet', sheet);
     const { ok, data } = await request('/importar/', { multipart: true, body: fd });
-    if (ok) setOutput(data.output);
+    if (ok) {
+      setOutput('Importação iniciada. A aguardar conclusão...');
+      const pollResult = await poll(data.clientMutationId);
+      if (pollResult.success) {
+        setOutput(pollResult.output);
+      } else {
+        setError(pollResult.error);
+      }
+    }
+    setLoading(false);
     return { ok, data };
   }
 
@@ -96,7 +149,16 @@ export function useBeneficiarios() {
     fd.append('dry_run', String(dryRun));
     if (skipPhases.length) fd.append('skip_phases', skipPhases.join(','));
     const { ok, data } = await request('/restore/', { multipart: true, body: fd });
-    if (ok) setOutput(data.output);
+    if (ok) {
+      setOutput('Restore iniciado. A aguardar conclusão...');
+      const pollResult = await poll(data.clientMutationId);
+      if (pollResult.success) {
+        setOutput(pollResult.output);
+      } else {
+        setError(pollResult.error);
+      }
+    }
+    setLoading(false);
     return { ok, data };
   }
 
