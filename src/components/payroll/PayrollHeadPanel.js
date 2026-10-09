@@ -14,9 +14,10 @@ import {
   FormattedMessage,
 } from '@stssocialst-stp/fe-core';
 import AdvancedFiltersDialog from './AdvancedFiltersDialog';
-import { CLEARED_STATE_FILTER } from '../../constants';
+import { CLEARED_STATE_FILTER, PAYMENT_METHOD } from '../../constants';
 import PayrollStatusPicker from './PayrollStatusPicker';
 import PaymentMethodPicker from '../../pickers/PaymentMethodPicker';
+import PayrollPaymentDateDialog from './dialogs/PayrollPaymentDateDialog';
 
 const styles = (theme) => ({
   tableTitle: theme.table.title,
@@ -145,6 +146,23 @@ class PayrollHeadPanel extends FormPanel {
               label={formatMessage(intl, 'payroll', 'paymentMethod')}
             />
           </Grid>
+          <Grid item xs={3} className={classes.item}>
+            <PublishedComponent
+              pubRef="core.DatePicker"
+              module="payroll"
+              label="payroll.paymentDate"
+              value={payroll?.paymentDate}
+              required={payroll?.paymentMethod === PAYMENT_METHOD.STRATEGY_BISTP_PAYMENT}
+              readOnly={readOnly}
+              disablePast={!readOnly}
+              onChange={(paymentDate) => this.updateAttribute('paymentDate', paymentDate)}
+            />
+          </Grid>
+          {readOnly && (
+          <Grid item xs={3} className={classes.item}>
+            <PayrollPaymentDateDialog payroll={payroll} readOnly={readOnly} />
+          </Grid>
+          )}
         </Grid>
         <Divider />
         {!isPayrollFromFailedInvoices

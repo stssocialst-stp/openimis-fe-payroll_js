@@ -135,6 +135,36 @@ function PayrollFilter({
           ])}
         />
       </Grid>
+      <Grid item xs={2} className={classes.item}>
+        <PublishedComponent
+          pubRef="core.DatePicker"
+          module="payroll"
+          label="payroll.paymentDateFrom"
+          value={filterValue('paymentDate_Gte')}
+          onChange={(value) => onChangeFilters([
+            {
+              id: 'paymentDate_Gte',
+              value,
+              filter: value ? `paymentDate_Gte: "${value}"` : EMPTY_STRING,
+            },
+          ])}
+        />
+      </Grid>
+      <Grid item xs={2} className={classes.item}>
+        <PublishedComponent
+          pubRef="core.DatePicker"
+          module="payroll"
+          label="payroll.paymentDateTo"
+          value={filterValue('paymentDate_Lte')}
+          onChange={(value) => onChangeFilters([
+            {
+              id: 'paymentDate_Lte',
+              value,
+              filter: value ? `paymentDate_Lte: "${value}"` : EMPTY_STRING,
+            },
+          ])}
+        />
+      </Grid>
       <ControlledField
         module="payroll"
         id="payrollFilter.showHistory"

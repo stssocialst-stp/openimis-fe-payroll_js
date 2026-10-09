@@ -20,7 +20,7 @@ import {
 } from '../../actions';
 import {
   MODULE_NAME, PAYROLL_FROM_FAILED_INVOICES_URL_PARAM,
-  RIGHT_PAYROLL_CREATE,
+  RIGHT_PAYROLL_CREATE, PAYMENT_METHOD,
 } from '../../constants';
 import { ACTION_TYPE } from '../../reducer';
 import { mutationLabel, pageTitle } from '../../utils/string-utils';
@@ -126,6 +126,7 @@ function PayrollPage({
       && editedPayroll?.paymentPlan
       && editedPayroll?.paymentCycle
       && editedPayroll?.paymentMethod
+      && (editedPayroll?.paymentMethod !== PAYMENT_METHOD.STRATEGY_BISTP_PAYMENT || editedPayroll?.paymentDate)
       && !editedPayroll?.isDeleted) return false;
     return true;
   };

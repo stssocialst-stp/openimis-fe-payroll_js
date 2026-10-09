@@ -35,13 +35,14 @@ const BENEFIT_CONSUMPTION_PROJECTION = () => [
   'type',
   'status',
   'dateDue',
+  'paymentDate',
 ];
 
 const PAYROLL_BENEFIT_CONSUMPTION_PROJECTION = () => [
   'id',
   // eslint-disable-next-line max-len
-  'benefit{id,isDeleted,jsonExt,dateCreated,dateUpdated,dateValidFrom,dateValidTo,id,code,individual {firstName, lastName},benefitAttachment {bill {id, code, terms, datePayed}},receipt,photo,amount,type,status,dateDue}',
-  'payroll {id, name, status, paymentCycle {code, startDate, endDate}, paymentMethod, benefitPlanNameCode}',
+  'benefit{id,isDeleted,jsonExt,dateCreated,dateUpdated,dateValidFrom,dateValidTo,id,code,individual {firstName, lastName},benefitAttachment {bill {id, code, terms, datePayed}},receipt,photo,amount,type,status,dateDue,paymentDate}',
+  'payroll {id, name, status, paymentCycle {code, startDate, endDate}, paymentMethod, paymentDate, benefitPlanNameCode}',
 ];
 
 const BENEFIT_CONSUMPTION_SUMMARY_PROJECTION = () => [
@@ -61,6 +62,7 @@ const PAYROLL_PROJECTION = (modulesManager) => [
   'id',
   'name',
   'paymentMethod',
+  'paymentDate',
   'paymentPlan { code, id, name, benefitPlanType }',
   'benefitPlanNameCode',
   `paymentPoint { ${PAYMENT_POINT_PROJECTION(modulesManager).join(' ')} }`,
@@ -77,6 +79,7 @@ const PAYROLL_SEARCHER_PROJECTION = (modulesManager) => [
   'id',
   'name',
   'paymentMethod',
+  'paymentDate',
   'paymentPlan { code, id, name, benefitPlanType }',
   'benefitPlanNameCode',
   `paymentPoint { ${PAYMENT_POINT_PROJECTION(modulesManager).join(' ')} }`,
@@ -114,6 +117,7 @@ const formatPayrollGQL = (payroll) => `
   ${payroll?.paymentPlan ? `paymentPlanId: "${decodeId(payroll.paymentPlan.id)}"` : ''}
   ${payroll?.paymentCycle ? `paymentCycleId: "${decodeId(payroll.paymentCycle.id)}"` : ''}
   ${payroll?.paymentMethod ? `paymentMethod: "${payroll.paymentMethod}"` : ''}
+  ${payroll?.paymentDate ? `paymentDate: "${payroll.paymentDate}"` : ''}
   ${`status: ${PAYROLL_STATUS.PENDING_APPROVAL}`}
   ${
   payroll?.jsonExt
@@ -310,6 +314,19 @@ export function makePaymentForPayroll(payroll, clientMutationLabel) {
     MUTATION_SERVICE.PAYROLL.MAKE_PAYMENT,
     payrollUuids,
     ACTION_TYPE.MAKE_PAYMENT_PAYROLL,
+    clientMutationLabel,
+  );
+}
+
+export function updatePayrollPaymentDate(payroll, paymentDate, clientMutationLabel) {
+  const mutationInput = `
+    id: "${payroll?.id}"
+    paymentDate: "${paymentDate}"
+  `;
+  return PERFORM_MUTATION(
+    MUTATION_SERVICE.PAYROLL.UPDATE_PAYMENT_DATE,
+    mutationInput,
+    ACTION_TYPE.UPDATE_PAYROLL_PAYMENT_DATE,
     clientMutationLabel,
   );
 }

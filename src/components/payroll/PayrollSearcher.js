@@ -87,6 +87,7 @@ function PayrollSearcher({
     'payroll.paymentPoint',
     'payroll.status',
     'payroll.paymentMethod',
+    'payroll.paymentDate',
     'payroll.bistp.progress',
     'emptyLabel',
   ];
@@ -97,6 +98,7 @@ function PayrollSearcher({
     ['paymentPoint', true],
     ['status', true],
     ['paymentMethod', true],
+    ['paymentDate', true],
   ];
 
   const renderBistpProgress = (payroll) => {
@@ -145,6 +147,7 @@ function PayrollSearcher({
       ? `${payroll.status}` : ''),
     (payroll) => (payroll.paymentMethod
       ? `${payroll.paymentMethod}` : ''),
+    (payroll) => (payroll.paymentDate ?? '—'),
     (payroll) => renderBistpProgress(payroll),
     (payroll) => (
       <Tooltip title={formatMessage('tooltip.viewDetails')}>

@@ -32,6 +32,7 @@ export const ACTION_TYPE = {
   CLOSE_PAYROLL: 'PAYROLL_MUTATION_CLOSE_PAYROLL',
   REJECT_PAYROLL: 'PAYROLL_MUTATION_REJECT_PAYROLL',
   MAKE_PAYMENT_PAYROLL: 'PAYROLL_MUTATION_MAKE_PAYMENT_PAYROLL',
+  UPDATE_PAYROLL_PAYMENT_DATE: 'PAYROLL_MUTATION_UPDATE_PAYROLL_PAYMENT_DATE',
   GET_PAYROLL_PAYMENT_FILES: 'GET_PAYROLL_PAYMENT_FILES',
   BENEFITS_SUMMARY: 'PAYROLL_BENEFITS_SUMMARY',
   GET_BISTP_SUMMARY: 'PAYROLL_BISTP_SUMMARY',
@@ -50,6 +51,7 @@ export const MUTATION_SERVICE = {
     CLOSE: 'closePayroll',
     REJECT: 'rejectPayroll',
     MAKE_PAYMENT: 'makePaymentForPayroll',
+    UPDATE_PAYMENT_DATE: 'updatePayrollPaymentDate',
   },
   BENEFIT_CONSUMPTION: {
     DELETE: 'deleteBenefitConsumption',
@@ -239,6 +241,7 @@ function reducer(
           id: decodeId(payroll.id),
           dateValidTo: payroll?.dateValidTo ? payroll?.dateValidTo.split('T')[0] : null,
           dateValidFrom: payroll?.dateValidFrom ? payroll?.dateValidFrom.split('T')[0] : null,
+          paymentDate: payroll?.paymentDate ? payroll?.paymentDate.split('T')[0] : null,
         }))?.[0],
         errorPayroll: formatGraphQLError(action.payload),
       };
@@ -477,6 +480,8 @@ function reducer(
       return dispatchMutationResp(state, MUTATION_SERVICE.PAYMENT_POINT.UPDATE, action);
     case SUCCESS(ACTION_TYPE.CREATE_PAYROLL):
       return dispatchMutationResp(state, MUTATION_SERVICE.PAYROLL.CREATE, action);
+    case SUCCESS(ACTION_TYPE.UPDATE_PAYROLL_PAYMENT_DATE):
+      return dispatchMutationResp(state, MUTATION_SERVICE.PAYROLL.UPDATE_PAYMENT_DATE, action);
     case SUCCESS(ACTION_TYPE.DELETE_PAYROLL):
       return dispatchMutationResp(state, MUTATION_SERVICE.PAYROLL.DELETE, action);
     case SUCCESS(ACTION_TYPE.DELETE_BENEFIT_CONSUMPTION):

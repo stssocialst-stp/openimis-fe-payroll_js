@@ -113,10 +113,12 @@ function BenefitConsumptionSearcher({
     (benefitConsumption) => (isPayrollFromFailedInvoices
       ? BENEFIT_CONSUMPTION_STATUS.APPROVE_FOR_PAYMENT : benefitConsumption?.status),
     (benefitConsumption) => checkBenefitDueDate(benefitConsumption),
+    // paymentDate enviada ao BISTP; fallback para bill.datePayed (offline); "—" se ainda não enviado
     (benefitConsumption) => (
-      !benefitConsumption.receipt
-        ? ''
-        : benefitConsumption?.benefitAttachment[0]?.bill?.datePayed
+      benefitConsumption?.paymentDate
+      ?? (!benefitConsumption.receipt
+        ? '—'
+        : benefitConsumption?.benefitAttachment?.[0]?.bill?.datePayed ?? '—')
     ),
     (benefitConsumption) => {
       const jsonExt = benefitConsumption?.jsonExt || {};
@@ -147,6 +149,7 @@ function BenefitConsumptionSearcher({
     ['amount', true],
     ['type', true],
     ['status', true],
+    ['paymentDate', true],
   ];
 
   const defaultFilters = () => {
