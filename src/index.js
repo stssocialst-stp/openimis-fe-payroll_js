@@ -14,6 +14,7 @@ import {
 } from './constants';
 import reducer from './reducer';
 import messages_en from './translations/en.json';
+import messages_pt from './translations/pt.json';
 import PaymentPointPage from './pages/payment-point/PaymentPointPage';
 import PaymentPointsPage from './pages/payment-point/PaymentPointsPage';
 import PayrollPage from './pages/payroll/PayrollPage';
@@ -59,7 +60,10 @@ const ROUTE_BENEFICIARIES_MANAGEMENT = 'beneficiariesManagement';
 const ROUTE_PAYROLL = 'payrolls/payroll';
 
 const DEFAULT_CONFIG = {
-  translations: [{ key: 'en', messages: messages_en }],
+  translations: [
+    { key: 'en', messages: messages_en },
+    { key: 'pt', messages: messages_pt },
+  ],
   reducers: [{ key: 'payroll', reducer }],
   refs: [
     { key: 'payroll.route.paymentPoints', ref: ROUTE_PAYMENT_POINTS },

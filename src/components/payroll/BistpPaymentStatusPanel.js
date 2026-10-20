@@ -109,7 +109,7 @@ function BistpPaymentStatusPanel({
               />
               <BistpMetric
                 classes={classes}
-                label={formatMessage('payroll.bistp.status.pending')}
+                label={formatMessage('payroll.bistp.status.toSend')}
                 value={pendentes}
               />
               <BistpMetric

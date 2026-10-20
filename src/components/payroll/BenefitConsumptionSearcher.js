@@ -90,7 +90,8 @@ function BenefitConsumptionSearcher({
     if (jsonExt.bistp_skip_reason === 'nib_ausente') {
       return <Chip label={formatMessage('payroll.bistp.status.skippedNib')} style={{ backgroundColor: '#9e9e9e', color: 'white' }} size="small" />;
     }
-    if (jsonExt.bistp_skip_reason === 'envio_falhou') {
+    // o backend grava 'batch_falhou' quando o pedido de 100 pagamentos falhou sem resposta 200
+    if (jsonExt.bistp_skip_reason === 'batch_falhou') {
       return <Chip label={formatMessage('payroll.bistp.status.sendFailed')} style={{ backgroundColor: '#f44336', color: 'white' }} size="small" />;
     }
     return null;
