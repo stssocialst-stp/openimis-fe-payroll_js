@@ -29,6 +29,16 @@ jobs:
         with:
           node-version: "20.x"
 
+      - name: Check tag matches package.json version
+        if: github.ref_type == 'tag'
+        run: |
+          PKG_VERSION="v$(node -p "require('./package.json').version")"
+          if [ "${GITHUB_REF_NAME}" != "${PKG_VERSION}" ]; then
+            echo "ERROR: tag ${GITHUB_REF_NAME} does not match package.json version ${PKG_VERSION}." >&2
+            echo "The tarball file name comes from package.json — bump it and re-tag." >&2
+            exit 1
+          fi
+
       - name: Install dependencies
         run: npm ci --ignore-scripts
 
